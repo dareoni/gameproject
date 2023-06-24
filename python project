@@ -1,0 +1,70 @@
+import random
+# Define the adventurer class
+class Adventurer:
+def __init__(self, name):
+self.name = name
+self.trinkets_collected = 0
+self.personal_resource = 100
+def collect_trinket(self):
+self.trinkets_collected += 1
+def reduce_resource(self, amount):
+self.personal_resource -= amount
+def display_stats(self):
+print(f"Adventurer: {self.name}")
+print(f"Trinkets Collected: {self.trinkets_collected}")
+print(f"Personal Resource: {self.personal_resource}")
+# Define the enemy class
+class Enemy:
+def __init__(self, name, introduction, resource):
+self.name = name
+self.introduction = introduction
+self.resource = resource
+def attack(self):
+damage = random.randint(10, 20)
+self.resource -= damage
+return damage
+def display_intro(self):
+print(self.introduction)
+# Define the game function
+def play_game():
+adventurer_name = input("Enter the name of the adventurer: ")
+adventurer = Adventurer(adventurer_name)
+# Define the possible enemies
+enemies = [
+Enemy("Shark", "It's a fearsome shark! Watch out for its sharp teeth!",
+50),
+Enemy("Nosy Neighbor", "Beware of the nosy neighbor! They're snooping
+around!", 30),
+Enemy("Kylo Ren", "The dark warrior Kylo Ren is here! Prepare for a
+lightsaber duel!", 70)
+]
+goal_steps = 10
+current_step = 0
+while current_step < goal_steps:
+print(f"\nStep {current_step + 1}:")
+action = input("Choose an action - 'C' to continue, 'A' to attack an enemy:")
+if action.upper() == "C":
+trinket_chance = random.randint(1, 10)
+if trinket_chance <= 5:
+adventurer.collect_trinket()
+print("You found a trinket!")
+else:
+print("Nothing interesting happened.")
+current_step += 1
+elif action.upper() == "A":
+enemy = random.choice(enemies)
+enemy.display_intro()
+attack_damage = enemy.attack()
+adventurer.reduce_resource(attack_damage)
+print(f"You attacked the {enemy.name} and caused {attack_damage}
+damage!")
+if enemy.resource <= 0:
+print(f"You defeated the {enemy.name}!")
+enemies.remove(enemy)
+current_step += 1
+else:
+print("Invalid action. Try again.")
+print("\nGame Over!")
+adventurer.display_stats()
+# Run the game
+play_game()
